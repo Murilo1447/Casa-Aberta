@@ -1,34 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
- 
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width= , initial-scale=1.0">
-    <title>Hackers</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackers - Escape Room</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist+Pixel&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
-   
 </head>
- 
+
 <body>
     <section>
-        <div class="card">
+        <div id="cardPrincipal" class="card">
             <div class="Titulo">
                 <h1> INSIRA O CÓDIGO CORRETO </h1>
             </div>
             <div class="info">
                 <h4>Você terá apenas três tentativas</h4>
             </div>
- 
+
+            <div id="erros" class="erros-container"></div>
+
             <div class="codigo">
-                <input type="text" placeholder="Insira o codigo de 4 digitos...">
+                <input type="text" id="codigoInput" placeholder="Insira o codigo de 4 digitos..." maxlength="4" style="font-family: 'Geist Pixel', sans-serif;">
             </div>
- 
+
             <div class="botao">
-                <button onclick="confirmar()">confirmar</button>
+                <button id="btnConfirmar" onclick="confirmar()">confirmar</button>
+            </div>
+
+            <div id="resultado" class="resultado-oculto">
+                <p>CÓDIGO LIBERADO:</p>
+                <span id="numeroRevelado">5624</span>
+            </div>
+        </div>
+
+        <div id="cardBloqueio" class="card-bloqueio" style="display: none;">
+            <div id="errosBloqueio" class="erros-container"></div>
+            <div class="timer-container">
+                <h2>SISTEMA BLOQUEADO!</h2>
+                <p>Reconectando o sistema em:</p>
+                <span id="tempo">60</span><span class="segundos">s</span>
             </div>
         </div>
     </section>
+
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
- 
+
 </html>
