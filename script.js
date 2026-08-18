@@ -1,4 +1,4 @@
-const CODIGO_CORRETO = "4123"; 
+const CODIGO_CORRETO = "4213"; 
 
 let tentativasErradas = 0;
 const MAX_TENTATIVAS = 3;
