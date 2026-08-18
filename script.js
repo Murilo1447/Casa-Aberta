@@ -84,16 +84,30 @@ function iniciarTimer() {
     }, 1000);
 }
 
-// Bloqueia F5, Ctrl+R e Cmd+R sem emitir nenhum aviso/alerta
+// Bloqueia teclas e atalhos de atualização, navegação e fechamento
 window.addEventListener("keydown", function (event) {
-    // Tecla F5 (keyCode 116 ou key 'F5')
-    const eF5 = event.key === "F5" || event.keyCode === 116;
-    
-    // Ctrl + R (Windows/Linux) ou Cmd + R (Mac)
-    const eCtrlR = (event.ctrlKey || event.metaKey) && (event.key === "r" || event.key === "R");
+    const tecla = event.key;
+    const codigo = event.keyCode;
+    const ctrlOuCmd = event.ctrlKey || event.metaKey;
 
-    if (eF5 || eCtrlR) {
-        event.preventDefault(); // Cancela o recarregamento silenciosamente
+    // 1. Tecla F5 e F11/F12 (Evita reload e abertura de DevTools)
+    const teclasF = tecla === "F5" || codigo === 116 || tecla === "F12" || codigo === 123;
+
+    // 2. Ctrl+R / Cmd+R (Reload) e Ctrl+Shift+R / Cmd+Shift+R (Hard Reload)
+    const atalhoReload = ctrlOuCmd && (tecla === "r" || tecla === "R");
+
+    // 3. Ctrl+W / Cmd+W (Fechar Aba) e Ctrl+F4
+    const atalhoFechar = (ctrlOuCmd && (tecla === "w" || tecla === "W")) || (event.ctrlKey && tecla === "F4");
+
+    // 4. Alt + Seta Esquerda (Voltar página) e Alt + Seta Direita (Avançar página)
+    const atalhoNavegacaoAlt = event.altKey && (tecla === "ArrowLeft" || tecla === "ArrowRight");
+
+    // 5. Backspace fora de campos de texto (evita voltar página em navegadores antigos)
+    const eBackspaceForaDeInput = tecla === "Backspace" && document.activeElement.tagName !== "INPUT";
+
+    if (teclasF || atalhoReload || atalhoFechar || atalhoNavegacaoAlt || eBackspaceForaDeInput) {
+        event.preventDefault();
+        event.stopPropagation();
     }
 });
 
