@@ -96,3 +96,38 @@ window.addEventListener("keydown", function (event) {
         event.preventDefault(); // Cancela o recarregamento silenciosamente
     }
 });
+
+
+// Captura elementos
+const inputCodigo = document.getElementById("codigoInput");
+
+// 1. Aciona o botão ao pressionar "Enter"
+inputCodigo.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        confirmar();
+    }
+});
+
+// 2. Garante o foco no input assim que a página carrega
+window.addEventListener("DOMContentLoaded", () => {
+    inputCodigo.focus();
+});
+
+// 3. Qualquer tecla digitada fora do campo direciona o foco para o input
+document.addEventListener("keydown", (event) => {
+    // Evita focar se estiver bloqueado ou se o input já estiver desativado
+    if (inputCodigo.disabled || tentativasErradas >= MAX_TENTATIVAS) return;
+
+    // Se a tecla pressionada não for Enter, Tab, Escape, etc., foca no input
+    if (document.activeElement !== inputCodigo && event.key.length === 1) {
+        inputCodigo.focus();
+    }
+});
+
+// 4. Se o usuário clicar em qualquer lugar fora da tela, o foco volta para o input
+document.addEventListener("click", () => {
+    if (!inputCodigo.disabled && tentativasErradas < MAX_TENTATIVAS) {
+        inputCodigo.focus();
+    }
+});
